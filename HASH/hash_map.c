@@ -46,7 +46,6 @@ void put(HashMap* map, const char* key, int value){
     new_node->value = value;
     new_node->next = map->buckets[index];
     map->buckets[index] = new_node;
-
 }
 
 int get(HashMap* map, const char* key) {
