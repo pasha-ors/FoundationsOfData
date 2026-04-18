@@ -68,7 +68,7 @@ int resizeQueue(Queue* q) {
     return 1;
 }
 
-void enqueue(Queue* q, int value) {
+int enqueue(Queue* q, int value) {
     if(isFull(q)){
         if (!resizeQueue(q)) {
             return 0;
@@ -78,6 +78,8 @@ void enqueue(Queue* q, int value) {
     q->rear = (q->rear + 1) % q->capacity;
     q->data[q->rear] = value;
     q->size++;
+
+    return 1;
 }
 
 int dequeue(Queue* q, int* result) {
