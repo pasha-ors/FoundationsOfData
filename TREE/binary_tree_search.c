@@ -29,6 +29,52 @@ Node* insert(Node* root, int value){
     return root;
 }
 
+Node* findMin(Node* root) {
+    while (root->left != NULL) {
+        root = root->left;
+    }
+    return root;
+}
+
+Node* deleteNode(Node* root, int value){
+    if(root == NULL){
+        return NULL;
+    }
+
+    if (value < root->value) {
+        root->left = deleteNode(root->left, value);
+    }
+    else if (value > root->value) {
+        root->right = deleteNode(root->right, value);
+    }else{
+        if (root->left == NULL && root->right == NULL) {
+            free(root);
+            return NULL;
+        }
+
+        else if (root->left == NULL) {
+            Node* temp = root->right;
+            free(root);
+            return temp;
+        }
+
+        else if (root->right == NULL) {
+            Node* temp = root->left;
+            free(root);
+            return temp;
+        }
+
+        else {
+            Node* temp = findMin(root->right);
+            root->value = temp->value;
+            root->right = deleteNode(root->right, temp->value);
+        }
+
+    }
+
+    return root;
+}
+
 void freeTree(Node* root) {
     if (root == NULL) return;
     freeTree(root->left);
@@ -78,6 +124,13 @@ int main() {
 
     printf("Post-order traversal: ");
     postorder(root);
+    printf("\n");
+
+    printf("Delete value 40: ");
+    deleteNode(root, 40);
+
+    printf("In-order traversal: ");
+    inorder(root);
     printf("\n");
 
     freeTree(root);
